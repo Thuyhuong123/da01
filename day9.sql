@@ -14,6 +14,11 @@ when (x+y)>z and (x+z)>y and (z+y)>x then 'Yes' else 'No'
 end as triangle
 from triangle
 --ex3--
+ with uncategorised_callers as (select count(case_id) as uncategorised_calls from callers
+where call_category	is null or call_category	='n/a')
+select cast(100.0*uncategorised_calls/
+(select count(*) from callers) as decimal(10,1)) 
+from uncategorised_callers
 --ex4--
 select name from customer 
 where referee_id <>2 or referee_id is null
